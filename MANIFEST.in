@@ -1,0 +1,2 @@
+recursive-include simple_shortener/templates *
+recursive-include simple_shortener/static *
