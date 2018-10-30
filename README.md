@@ -31,6 +31,10 @@ For example, on Ubuntu:
 
 Below are a few design choices which have been made and the justification.
 
+Each url alias (short url) is 8 characters long and each character is chosen from a set of 64 
+options. This way there are more than 2.8 * 10 ^ 14 possibilities but it is sufficiently short and 
+can be encoded to a long int.
+
 When a url is submitted to be shortened a new alias is created even if that url is already stored.
 This was done to allow easy addition of features such as analytics and deletion of the aliases 
 by the user in the future.
