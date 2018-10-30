@@ -1,4 +1,4 @@
-ifdef OS
+ifeq ($(OS),Windows_NT)
    VENV_BIN = venv/Scripts
 else
    VENV_BIN = venv/bin

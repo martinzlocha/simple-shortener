@@ -6,7 +6,6 @@ from tests.test_database import TestDatabase
 
 
 class APITestCase(unittest.TestCase):
-
     def setUp(self):
         self.app = simple_shortener.app.test_client()
         self.database = TestDatabase()
