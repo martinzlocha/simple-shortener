@@ -16,6 +16,18 @@ class APITestCase(unittest.TestCase):
         response = self.app.post('/shorten_url', data={'url': 'https://google.com'})
         self.assertEqual(response.status_code, 201)
 
+    def test_no_empty_url(self):
+        response = self.app.post('/shorten_url', data={'url': ''})
+        self.assertEqual(response.status_code, 400)
+
+    def test_invalid_url(self):
+        response = self.app.post('/shorten_url', data={'url': 'invalid-url'})
+        self.assertEqual(response.status_code, 400)
+
+    def test_disallow_javascript(self):
+        response = self.app.post('/shorten_url', data={'url': 'javascript: (function(){})'})
+        self.assertEqual(response.status_code, 400)
+
     def test_empty_post_fails(self):
         response = self.app.post('/shorten_url')
         self.assertEqual(response.status_code, 400)

@@ -1,5 +1,6 @@
 from flask_restful import Api, Resource, reqparse
 from flask import redirect, request
+import validators
 
 from simple_shortener import app, db, cache
 from simple_shortener.alias_mapper import AliasMapper
@@ -15,7 +16,12 @@ class ShortenUrl(Resource):
 
     def post(self):
         args = self._parser.parse_args(strict=True)
-        alias = alias_mapper.store_url(args['url'])
+        url = args['url']
+
+        if not validators.url(url):
+            return 'Malformed url provided.', 400
+
+        alias = alias_mapper.store_url(url)
         return {'shortened_url': '{}{}'.format(request.host_url, alias)}, 201
 
 
