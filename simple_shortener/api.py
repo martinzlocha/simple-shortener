@@ -1,7 +1,7 @@
 from flask_restful import Api, Resource, reqparse
 from flask import redirect, request
 
-from simple_shortener import app, db
+from simple_shortener import app, db, cache
 from simple_shortener.alias_mapper import AliasMapper
 
 api = Api(app)
@@ -20,11 +20,11 @@ class ShortenUrl(Resource):
 
 
 class Redirect(Resource):
+    @cache.cached(timeout=app.config['CACHE_DURATION'])
     def get(self, alias):
         try:
             return redirect(alias_mapper.get_url(alias), code=301)
-        except KeyError as e:
-            app.logger.error(e)
+        except KeyError:
             return 'Could not find a target for the provided url.', 404
 
 

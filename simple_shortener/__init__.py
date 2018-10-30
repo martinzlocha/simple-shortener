@@ -1,6 +1,7 @@
 import os
 
 from flask import Flask
+from flask_caching import Cache
 from tinydb import TinyDB
 
 app = Flask(__name__)
@@ -8,6 +9,8 @@ app.config.from_object('simple_shortener.default_settings')
 app.config.from_envvar('SIMPLE_SHORTENER_SETTINGS')
 
 db = TinyDB(os.path.join('db', 'store.db'))
+
+cache = Cache(app, config={'CACHE_TYPE': 'simple'})
 
 if not app.debug:
     import logging

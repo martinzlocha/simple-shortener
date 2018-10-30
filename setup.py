@@ -9,6 +9,7 @@ setup(
     zip_safe=False,
     install_requires=[
         'tinydb',
+        'flask-caching',
         'Flask-RESTful',
         'Flask'
     ],
